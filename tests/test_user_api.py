@@ -40,5 +40,9 @@ class TestUserApi(unittest.TestCase):
         result = self.temp.get_users_without_param('login')
         assert_that(result[0]).does_not_contain_key('login')
 
+    def test_get_user_with_nationality(self):
+        result = self.temp.get_user_with_nationality('gb')
+        assert_that(result[0]['nat']).is_equal_to('GB')
+
 if __name__ == "__main__":
     unittest.main()

@@ -26,3 +26,8 @@ class UserApi:
         new_url = self.main_url + f"?exc={param}"
         response = self.get_api(new_url)
         return response.json()["results"]
+
+    def get_user_with_nationality(self, nationality):  # e.g. gb - great britain
+        new_url = self.main_url + f"?nat={nationality.upper()}"
+        response = self.get_api(new_url)
+        return response.json()["results"]
