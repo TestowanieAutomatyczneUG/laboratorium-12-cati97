@@ -44,5 +44,9 @@ class TestUserApi(unittest.TestCase):
         result = self.temp.get_user_with_nationality('gb')
         assert_that(result[0]['nat']).is_equal_to('GB')
 
+    def test_get_number_of_results(self):
+        results = self.temp.get_number_of_results(50)
+        assert_that(results).is_length(50)
+
 if __name__ == "__main__":
     unittest.main()

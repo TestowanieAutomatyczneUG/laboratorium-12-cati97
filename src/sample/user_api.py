@@ -31,3 +31,8 @@ class UserApi:
         new_url = self.main_url + f"?nat={nationality.upper()}"
         response = self.get_api(new_url)
         return response.json()["results"]
+
+    def get_number_of_results(self, length):
+        new_url = self.main_url + f"?results={str(length)}"
+        response = self.get_api(new_url)
+        return response.json()["results"]
