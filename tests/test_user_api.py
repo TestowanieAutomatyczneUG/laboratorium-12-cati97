@@ -32,7 +32,9 @@ class TestUserApi(unittest.TestCase):
         result = self.temp.get_users_only_with_parameter('email')
         assert_that(result[0]).contains_key('email')
 
-
+    def test_include_two_params(self):
+        result = self.temp.get_users_only_with_two_params('gender', 'phone')
+        assert_that(result[0]).does_not_contain_key('name')
 
 if __name__ == "__main__":
     unittest.main()
