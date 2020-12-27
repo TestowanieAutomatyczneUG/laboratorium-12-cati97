@@ -20,7 +20,9 @@ class TestUserApiMock(unittest.TestCase):
         response = self.temp.get_api(self.temp.main_url + 'j')
         self.assertEqual(response, 503)
 
-    def test_get_api_returns_response_not_none(self):
+    @patch('src.sample.user_api.requests')
+    def test_get_api_returns_response_not_none(self, mock_requests):
+        mock_requests.get.return_value = 200
         response = self.temp.get_api(self.temp.main_url)
         assert_that(response).is_not_none()
 
