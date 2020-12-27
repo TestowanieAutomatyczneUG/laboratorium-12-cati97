@@ -48,5 +48,6 @@ class TestUserApi(unittest.TestCase):
         results = self.temp.get_number_of_results(50)
         assert_that(results).is_length(50)
 
+
 if __name__ == "__main__":
     unittest.main()
