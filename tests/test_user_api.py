@@ -36,5 +36,9 @@ class TestUserApi(unittest.TestCase):
         result = self.temp.get_users_only_with_two_params('gender', 'phone')
         assert_that(result[0]).does_not_contain_key('name')
 
+    def test_exclude_one_param(self):
+        result = self.temp.get_users_without_param('login')
+        assert_that(result[0]).does_not_contain_key('login')
+
 if __name__ == "__main__":
     unittest.main()

@@ -12,13 +12,17 @@ class UserApi:
     def get_json(self, response):
         return response.json()
 
-    def get_users_only_with_parameter(self, option):  # option can be gender, name, email
-        new_url = self.main_url + f"?inc={option}"
+    def get_users_only_with_parameter(self, param):  # option can be gender, name, email
+        new_url = self.main_url + f"?inc={param}"
         response = self.get_api(new_url)
         return response.json()["results"]
 
-
     def get_users_only_with_two_params(self, param1, param2):  # option can be gender, name, email
         new_url = self.main_url + f"?inc={param1},{param2}"
+        response = self.get_api(new_url)
+        return response.json()["results"]
+
+    def get_users_without_param(self, param):  # e.g. login
+        new_url = self.main_url + f"?exc={param}"
         response = self.get_api(new_url)
         return response.json()["results"]
