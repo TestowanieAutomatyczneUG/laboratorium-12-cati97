@@ -26,10 +26,11 @@ class TestUserApiMock(unittest.TestCase):
         response = self.temp.get_api(self.temp.main_url)
         assert_that(response).is_not_none()
 
-    def test_get_json_only_results_no_info(self):
+    @patch('src.sample.user_api.requests')
+    def test_get_json_only_results_no_info(self, mock_requests):
+        mock_requests.get.return_value = [{"gender":"female","name":{"title":"Mrs","first":"Lauren","last":"Brooks"},"location":{"street":{"number":3504,"name":"West Street"},"city":"Sligo","state":"Offaly","country":"Ireland","postcode":19283,"coordinates":{"latitude":"17.4256","longitude":"173.3981"},"timezone":{"offset":"+7:00","description":"Bangkok, Hanoi, Jakarta"}},"email":"lauren.brooks@example.com","login":{"uuid":"918c5edb-1f1a-4356-8be8-2b8a93eaae6c","username":"orangedog748","password":"trisha","salt":"0fQlwycR","md5":"ed71e1303fc65b2d48e1e7157ad38215","sha1":"aa6a6686c2c873883592372b01d1c3ff4252c298","sha256":"d45a6f92d5cbb2e164d0e3f6eb03bd5467d64f79cb408c628129ffb6c9cae588"},"dob":{"date":"1973-06-08T00:32:34.887Z","age":47},"registered":{"date":"2013-09-07T02:40:40.583Z","age":7},"phone":"021-966-9371","cell":"081-734-5814","id":{"name":"PPS","value":"5508904T"},"picture":{"large":"https://randomuser.me/api/portraits/women/58.jpg","medium":"https://randomuser.me/api/portraits/med/women/58.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/58.jpg"},"nat":"IE"}]
         response = self.temp.get_api(self.temp.main_url + '?noinfo')
-        json = self.temp.get_json(response)
-        assert_that(json["results"]).is_not_empty()
+        assert_that(response).is_not_empty()
 
     def test_include_only_parameter_name(self):
         result = self.temp.get_users_only_with_parameter('name')
