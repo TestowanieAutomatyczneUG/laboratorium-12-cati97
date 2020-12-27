@@ -65,7 +65,9 @@ class TestUserApiMock(unittest.TestCase):
         result = self.temp.get_users_without_param('login')
         assert_that(result[0]).does_not_contain_key('login')
 
-    def test_get_user_with_nationality(self):
+    @patch('src.sample.user_api.requests')
+    def test_get_user_with_nationality(self, mock_requests):
+        mock_requests.get.return_value = MockResponse({"results":[{"gender":"male","name":{"title":"Mr","first":"Herbert","last":"Ray"},"location":{"street":{"number":1146,"name":"Kings Road"},"city":"Newcastle upon Tyne","state":"County Fermanagh","country":"United Kingdom","postcode":"H51 0LB","coordinates":{"latitude":"-40.5244","longitude":"-30.4977"},"timezone":{"offset":"-4:00","description":"Atlantic Time (Canada), Caracas, La Paz"}},"email":"herbert.ray@example.com","login":{"uuid":"6b414835-e39c-4e81-a9cb-e6224ced1123","username":"smallpanda901","password":"monica","salt":"6oMV4Ih3","md5":"b7029a76ac2e7841b6e4ac3828fac6cf","sha1":"61bd78a09c930b233e98dc989a11c87c3093cb20","sha256":"59a00168a164df1e0d8dee6d950727a90a034080e2c081e85b09107f4abe9a76"},"dob":{"date":"1966-02-24T14:18:22.822Z","age":54},"registered":{"date":"2004-10-10T16:42:58.118Z","age":16},"phone":"0110443 310 7223","cell":"0767-917-876","id":{"name":"NINO","value":"EP 34 86 92 S"},"picture":{"large":"https://randomuser.me/api/portraits/men/18.jpg","medium":"https://randomuser.me/api/portraits/med/men/18.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/18.jpg"},"nat":"GB"}],"info":{"seed":"d15094872502fca6","results":1,"page":1,"version":"1.3"}}, 200)
         result = self.temp.get_user_with_nationality('gb')
         assert_that(result[0]['nat']).is_equal_to('GB')
 
