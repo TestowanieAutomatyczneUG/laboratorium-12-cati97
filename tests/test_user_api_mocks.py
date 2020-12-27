@@ -53,7 +53,9 @@ class TestUserApiMock(unittest.TestCase):
         result = self.temp.get_users_only_with_parameter('email')
         assert_that(result[0]).contains_key('email')
 
-    def test_include_two_params(self):
+    @patch('src.sample.user_api.requests')
+    def test_include_two_params(self, mock_requests):
+        mock_requests.get.return_value = MockResponse({"results":[{"gender":"male","phone":"47910989"}],"info":{"seed":"0fcd53b1bf0c14dc","results":1,"page":1,"version":"1.3"}}, 200)
         result = self.temp.get_users_only_with_two_params('gender', 'phone')
         assert_that(result[0]).does_not_contain_key('name')
 
