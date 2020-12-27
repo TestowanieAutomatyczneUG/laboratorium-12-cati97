@@ -26,7 +26,7 @@ class TestUserApi(unittest.TestCase):
 
     def test_include_only_parameter_name(self):
         result = self.temp.get_users_only_with_parameter('name')
-        assert_that(result[0]).contains_key('name')
+        assert_that(result["results"][0]).contains_key('name')
 
     def test_include_only_parameter_email(self):
         result = self.temp.get_users_only_with_parameter('email')

@@ -4,6 +4,15 @@ from assertpy import assert_that
 from unittest.mock import *
 
 
+class MockResponse:
+    def __init__(self, json_data, status_code):
+        self.json_data = json_data
+        self.status_code = status_code
+
+    def json(self):
+        return self.json_data["results"]
+
+
 class TestUserApiMock(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = UserApi('https://randomuser.me/api/')
@@ -32,7 +41,9 @@ class TestUserApiMock(unittest.TestCase):
         response = self.temp.get_api(self.temp.main_url + '?noinfo')
         assert_that(response).is_not_empty()
 
-    def test_include_only_parameter_name(self):
+    @patch('src.sample.user_api.requests')
+    def test_include_only_parameter_name(self, mock_requests):
+        mock_requests.get.return_value = MockResponse({'results': [{'name': {'title': 'Mr', 'first': 'Billy', 'last': 'Morgan'}}], 'info': {'seed': '27be2018e022f702', 'results': 1, 'page': 1, 'version': '1.3'}}, 200)
         result = self.temp.get_users_only_with_parameter('name')
         assert_that(result[0]).contains_key('name')
 
