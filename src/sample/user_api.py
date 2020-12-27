@@ -11,3 +11,8 @@ class UserApi:
 
     def get_json(self, response):
         return response.json()
+
+    def get_users_only_with_parameter(self, option):  # option can be gender, name, email
+        new_url = self.main_url + f"?inc={option}"
+        response = self.get_api(new_url)
+        return response.json()["results"]

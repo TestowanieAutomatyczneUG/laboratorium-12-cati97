@@ -24,6 +24,10 @@ class TestUserApi(unittest.TestCase):
         json = self.temp.get_json(response)
         assert_that(json["results"]).is_not_empty()
 
+    def test_include_only_parameter(self):
+        result = self.temp.get_users_only_with_parameter('name')
+        assert_that(result[0]).contains_key('name')
+
 
 
 if __name__ == "__main__":
