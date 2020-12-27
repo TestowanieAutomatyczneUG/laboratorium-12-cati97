@@ -59,7 +59,9 @@ class TestUserApiMock(unittest.TestCase):
         result = self.temp.get_users_only_with_two_params('gender', 'phone')
         assert_that(result[0]).does_not_contain_key('name')
 
-    def test_exclude_one_param(self):
+    @patch('src.sample.user_api.requests')
+    def test_exclude_one_param(self, mock_requests):
+        mock_requests.get.return_value = MockResponse({"results":[{"gender":"female","name":{"title":"Ms","first":"Gül","last":"Çörekçi"},"location":{"street":{"number":9117,"name":"Bağdat Cd"},"city":"Kırklareli","state":"Niğde","country":"Turkey","postcode":79578,"coordinates":{"latitude":"69.5480","longitude":"110.0547"},"timezone":{"offset":"+1:00","description":"Brussels, Copenhagen, Madrid, Paris"}},"email":"gul.corekci@example.com","dob":{"date":"1952-12-05T21:15:15.065Z","age":68},"registered":{"date":"2016-02-13T06:29:35.729Z","age":4},"phone":"(733)-000-0193","cell":"(943)-248-8666","id":{"name":"","value":0},"picture":{"large":"https://randomuser.me/api/portraits/women/96.jpg","medium":"https://randomuser.me/api/portraits/med/women/96.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/96.jpg"},"nat":"TR"}],"info":{"seed":"66c995cf34cd543d","results":1,"page":1,"version":"1.3"}}, 200)
         result = self.temp.get_users_without_param('login')
         assert_that(result[0]).does_not_contain_key('login')
 
