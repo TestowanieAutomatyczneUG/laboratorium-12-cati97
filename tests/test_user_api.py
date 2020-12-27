@@ -10,6 +10,10 @@ class TestUserApi(unittest.TestCase):
         result = self.temp.get_api('https://randomuser.me/api/')
         self.assertEqual(result.status_code, 200)
 
+    def test_get_api_returns_response_failure_code(self):
+        result = self.temp.get_api('https://randomuser.me/api/j')
+        self.assertNotEqual(result.status_code, 200)
+
 
 if __name__ == "__main__":
     unittest.main()
