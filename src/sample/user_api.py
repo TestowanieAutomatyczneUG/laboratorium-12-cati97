@@ -1,6 +1,5 @@
 import requests
 
-
 class UserApi:
     def __init__(self, main_url):
         self.main_url = main_url
