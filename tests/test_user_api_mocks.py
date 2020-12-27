@@ -71,9 +71,11 @@ class TestUserApiMock(unittest.TestCase):
         result = self.temp.get_user_with_nationality('gb')
         assert_that(result[0]['nat']).is_equal_to('GB')
 
-    def test_get_number_of_results(self):
-        results = self.temp.get_number_of_results(50)
-        assert_that(results).is_length(50)
+    @patch('src.sample.user_api.requests')
+    def test_get_number_of_results(self, mock_requests):
+        mock_requests.get.return_value = MockResponse({"results":[{"gender":"female","name":{"title":"Mademoiselle","first":"Adelina","last":"Rey"},"location":{"street":{"number":8495,"name":"Rue des Abbesses"},"city":"Oberbipp","state":"Thurgau","country":"Switzerland","postcode":3804,"coordinates":{"latitude":"-52.1992","longitude":"104.4869"},"timezone":{"offset":"-4:00","description":"Atlantic Time (Canada), Caracas, La Paz"}},"email":"adelina.rey@example.com","login":{"uuid":"0d84db9c-9176-4f5f-9826-2a36b54d9873","username":"happycat685","password":"birdie","salt":"fBy8t9wH","md5":"0aef18a400abb7e4d86db341992fb92f","sha1":"61abee1f76a8cda218ba0f8b3dfb6a9fe1b28680","sha256":"d6859e1b8cbd7bd03d7ba94ed42c4910f8b3e5a5a0b3589f21a4f6cdefa01188"},"dob":{"date":"1956-02-27T19:02:25.043Z","age":64},"registered":{"date":"2009-04-09T07:38:01.861Z","age":11},"phone":"079 654 24 12","cell":"079 556 61 96","id":{"name":"AVS","value":"756.6551.8942.43"},"picture":{"large":"https://randomuser.me/api/portraits/women/69.jpg","medium":"https://randomuser.me/api/portraits/med/women/69.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/69.jpg"},"nat":"CH"},{"gender":"female","name":{"title":"Ms","first":"Camille","last":"Kowalski"},"location":{"street":{"number":3801,"name":"Tecumseh Rd"},"city":"New Glasgow","state":"Nova Scotia","country":"Canada","postcode":"Z8E 6B0","coordinates":{"latitude":"-7.1023","longitude":"-135.2649"},"timezone":{"offset":"+5:00","description":"Ekaterinburg, Islamabad, Karachi, Tashkent"}},"email":"camille.kowalski@example.com","login":{"uuid":"3e88ba2e-aa88-42df-a366-2e47ca6e97fa","username":"bluepanda200","password":"hotmail1","salt":"N4Ro2CV4","md5":"aaede229bfc7cb494e98254afa69f078","sha1":"6b327e167300ac9205856462b0246974aafd3ad5","sha256":"19387662a49ced0b590a01bbbd4801c67925a75a05e1f8add4669ab861493125"},"dob":{"date":"1995-07-08T15:13:28.186Z","age":25},"registered":{"date":"2008-09-10T09:54:09.311Z","age":12},"phone":"005-009-7766","cell":"327-300-1753","id":{"name":"","value":None},"picture":{"large":"https://randomuser.me/api/portraits/women/60.jpg","medium":"https://randomuser.me/api/portraits/med/women/60.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/60.jpg"},"nat":"CA"}],"info":{"seed":"8f9cbf86e873a257","results":2,"page":1,"version":"1.3"}}, 200)
+        results = self.temp.get_number_of_results(2)
+        assert_that(results).is_length(2)
 
 
 if __name__ == "__main__":
